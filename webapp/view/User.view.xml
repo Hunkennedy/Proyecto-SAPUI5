@@ -1,0 +1,194 @@
+<mvc:View
+    controllerName="academia2022.zluuc3games.controller.Users"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}" showNavButton="true" navButtonPress="onNavBack">
+
+                    <headerContent>
+                        <Button icon="sap-icon://add-employee" text="Crear Usuario" tooltip="Crear Usuario" press="onCreateUser" />
+                    </headerContent>
+                    <content>
+                        <!-- INICIO CABECERA -->
+
+                        <ObjectHeader
+                            responsive="true"
+                            intro="Detalle del servidor"
+                            title="{modeloLocalServidor>/Region}"
+                            backgroundDesign="Translucent">
+                            <statuses>
+                                <ObjectStatus
+                                    title="Estado del Servidor"
+                                    state="{= ${modeloLocalServidor>/ServerStatus} === 'SERVER UP' ? 'Success' : 'Error' }"
+                                    text="{modeloLocalServidor>/ServerStatus}" />
+                            </statuses>
+                            <attributes>
+                                
+                                <ObjectAttribute title="Fecha de Apertura" text=" {modeloLocalServidor>/ServerRelease}"/>
+                                <ObjectAttribute title="Usuarios Registrados" text="{modeloLocalServidor>/QuantityUsers}"></ObjectAttribute>    
+                            </attributes>
+
+                            
+                        </ObjectHeader>
+
+                        <!-- FIN CABECERA -->
+
+                        <!-- INICIO Filtro -->
+
+                        <fb:FilterBar  
+                            showRestoreButton="false" 
+                            showClearButton="false" 
+                            showFilterConfiguration="false" 
+                            showGoOnFB="false" 
+                            useToolbar="false">
+                            <fb:filterGroupItems>
+                                <fb:FilterGroupItem 
+                                    groupName="__$INTERNAL$" 
+                                    name="idEstadoCuenta" 
+                                    label="Estado de Cuenta" 
+                                    labelTooltip="Tooltip Example" 
+                                    mandatory="false" 
+                                    partOfCurrentVariant="true" 
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Select 
+                                            id="idEstado"
+                                            forceSelection="false"
+                                            change="onFilterUsers"
+                                            items="{path: '/EstadoSet'}"
+                                            selectedKey="{CodEstado}">
+                                            <core:ListItem key="{CodEstado}" text="{DescEstado}"></core:ListItem>
+                                        </Select>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem 
+                                    groupName="__$INTERNAL$" 
+                                    name="idTipoCuenta" 
+                                    label="Tipo de Cuenta" 
+                                    labelTooltip="Tooltip Example"
+                                    mandatory="false" 
+                                    partOfCurrentVariant="true" 
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Select 
+                                            id="idTipo"
+                                            forceSelection="false"
+                                            change="onFilterUsers"
+                                            items="{path: '/TipoSet'}"
+                                            selectedKey="{CodTipo}">
+                                            <core:ListItem key="{CodTipo}" text="{DescTipo}"></core:ListItem>
+                                        </Select>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                                
+                            </fb:filterGroupItems>
+                            
+
+                        </fb:FilterBar>
+                        <!-- FIN Filtro -->
+
+                        <!-- INICIO TABLA -->
+
+                        <Table 
+                            id="idUsuariosTable"
+                            inset="false"
+                            alternateRowColors="true"
+                            noDataText="No hay usuarios en este servidor"
+                            items="{modeloLocalUsuarios>/}">
+                            
+                            <columns>
+                                
+                                <Column 
+                                    width="10em">
+                                    <Text text="{i18n>columna_Username}" />
+                                </Column>
+                                
+                                <Column 
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    width="10em"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_Mail}" />
+                                </Column>
+                                
+                                <Column 
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    hAlign="Center"
+                                    width="150px">
+                                    <Text text="{i18n>columna_AccountCreated}" />
+                                </Column>
+                                <Column 
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_AccountStatus}" />
+                                </Column>
+                                <Column 
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_TypeAccount}" />
+                                </Column>
+                                <Column 
+                                    width="5rem"
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_LevelAccount}" />
+                                </Column>
+                                <Column 
+                                    width="5rem"
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_TimePlayed}" />
+                                </Column>
+                                <Column width="32px" hAlign="Left" minScreenWidth="Small"></Column>
+                                <Column width="5rem" hAlign="Center">
+
+                                </Column>
+                                
+                            </columns>
+                            <items>
+                                <ColumnListItem 
+                                    id="_IDGenColumnListItem1" 
+                                    vAlign="Middle" 
+                                    press="onVisualizarUsuarios"
+                                    highlight="{= ${modeloLocalUsuarios>AccountStatus} === 'GOOD' ? 'Success' : 'Error' }">
+                                    <customData>
+                                        <core:CustomData key="mydata" value="{modeloLocalUsuarios>AccountStatus}" writeToDom="true"></core:CustomData>
+                                    </customData>
+                                    <cells>
+                                        <ObjectIdentifier title="{modeloLocalUsuarios>Username}"/>
+                                        
+                                        <Text text="{modeloLocalUsuarios>Mail}"/>
+                                        <Text text="{modeloLocalUsuarios>AccountCreated}" />
+                                        <Text text="{modeloLocalUsuarios>AccountStatus}" />
+                                        <Text text="{modeloLocalUsuarios>TypeAccount}" />
+                                        <Text text="{modeloLocalUsuarios>LevelAccount}" />
+                                        <Text text="{modeloLocalUsuarios>TimePlayed}" />
+                                        <Button 
+                                            icon="sap-icon://edit" 
+                                            type="Transparent" 
+                                            press="onDetailsUser"/>
+                                        <Button type="Reject" text="Bannear" press="onBannearUser" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+
+                        <!-- FIN TABLA -->
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

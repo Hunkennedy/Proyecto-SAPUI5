@@ -1,0 +1,39 @@
+<mvc:View
+    controllerName="academia2022.zluuc3games.controller.Userdetail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt">
+
+      
+    <Page
+		title="Edit User"
+		class="sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+		showNavButton="true" navButtonPress="onNavBack" >
+		
+		
+        <ScrollContainer vertical="true" height="100%">
+        
+            <FlexBox direction="Column" alignItems="Center" class="sapUiMediumMargin" >
+                <FlexBox direction="Row" alignItems="Start" class="sapUiTinyMarginBottom" width="auto">
+                    <Text text="{modeloLocalUsuario>/Username}: " class="sapUiTinyMarginEnd" width="200px"/>
+                    <Input id="idInputUsername"/>
+                    <Button text="Cambiar" press="_updateUserInfo"/>
+                </FlexBox>
+                <FlexBox direction="Row" alignItems="Start"  class="sapUiTinyMarginBottom" width="auto">
+                    <Text text="{modeloLocalUsuario>/Mail}: " class="sapUiTinyMarginEnd" width="200px"/>
+                    <Input id="idInputMail"/>
+                    <Button text="Cambiar" press="_updateUserInfo"/>
+                </FlexBox>
+                <FlexBox direction="Row" alignItems="Start"  class="sapUiTinyMarginBottom" width="auto">
+                    <Text text="Password: " class="sapUiTinyMarginEnd" width="200px"/>
+                    <Input id="idInputPassword"/>
+                    <Button text="Cambiar" press="_updateUserInfo"/>
+
+                </FlexBox>
+                
+            </FlexBox>
+        </ScrollContainer>
+	</Page>
+
+</mvc:View>

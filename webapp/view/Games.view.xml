@@ -1,0 +1,81 @@
+<mvc:View
+    controllerName="academia2022.zluuc3games.controller.Games"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <headerContent>
+                        <Button 
+                            icon="sap-icon://it-system" 
+                            text="Crear Servidor" 
+                            tooltip="Crear Servidor"
+                            press="onFragmentCreateServer" />
+                    </headerContent>
+                    <content>
+                        <Table 
+                            id="idServersTable"
+                            inset="false"
+                            alternateRowColors="true"
+                            items="{/GameServerSet}"
+                            >
+                            
+                            <columns>
+                                <Column 
+                                    width="3em">                                    
+                                </Column>
+                                <Column 
+                                    width="10em">
+                                    <Text text="{i18n>columna_region}" />
+                                </Column>
+                                <Column 
+                                    minScreenWidth="Tablet"
+                                    demandPopin="true"
+                                    width="10em"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_release_server}" />
+                                </Column>
+                                <Column 
+                                    minScreenWidth="Tablet"
+                                    width="14em"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_cantidad-usuarios}" />
+                                </Column>
+                                <Column 
+                                    minScreenWidth="Tablet"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_estado-servidor}" />
+                                </Column>
+                                
+                            </columns>
+                            <items>
+                                <ColumnListItem 
+                                    vAlign="Middle"
+                                    type="Navigation"
+                                    press="onVisualizarUsuarios"
+                                    highlight="{= ${ServerStatus} === 'SERVER UP' ? 'Success' : 'Error' }" >
+                                    <customData>
+                                        <core:CustomData key="mydata" value="{ServerStatus}" writeToDom="true"></core:CustomData>
+                                    </customData>
+                                    <cells>
+                                        <core:Icon src="sap-icon://it-host"/>
+                                        <ObjectIdentifier title="{Region}"/>
+                                        <Text text="{ServerRelease}" />
+                                        <Text text="{QuantityUsers}" />
+                                        <Text text="{ServerStatus}" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

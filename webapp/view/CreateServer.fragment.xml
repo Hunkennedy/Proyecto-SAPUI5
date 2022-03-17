@@ -1,0 +1,24 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form" >
+   
+    <SelectDialog 
+        contentHeight="300px"
+        title="Selecciona la region del nuevo servidor"
+        items="{/EstadoservidorSet}"
+        confirm="onCreateServer" >
+        
+        <StandardListItem title="{DescEstadoSer}">
+        
+        </StandardListItem>
+    </SelectDialog>
+
+    <!-- <TableSelectDialog
+        title=""
+        items="{/EstadoservidorSet}">
+        
+    </TableSelectDialog> -->
+   
+</core:FragmentDefinition>

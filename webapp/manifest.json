@@ -1,0 +1,152 @@
+{
+    "_version": "1.28.0",
+    "sap.app": {
+        "id": "academia2022.zluuc3games",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZOS_ACADEMIA_HK_GAMES_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.84.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "academia2022.zluuc3games.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            },
+            "invoice": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "servers.json"
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "academia2022.zluuc3games.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteGames",
+                    "pattern": "RouteGames",
+                    "target": [
+                        "TargetGames"
+                    ]
+                },
+                {
+                    "name": "users",
+                    "pattern": "GameUserSet{ServerId},{Region}",
+                    "target": [
+                        "TargetUsers"
+                    ]
+                },
+                {
+                    "name": "usersdetails",
+                    "pattern": "GetOneUser{ServerId},{Region},{Username}",
+                    "target": [
+                        "TargetUsersdetails"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetGames": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "Games",
+                    "viewLevel": 0
+                },
+                "TargetUsers": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "User",
+                    "viewLevel": 1
+                },
+                "TargetUsersdetails": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "Userdetail",
+                    "viewLevel": 2
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "academia2022.zluuc3games.view.Games",
+            "type": "XML",
+            "async": true,
+            "id": "Games"
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "academia2022-zluuc3games"
+    }
+}

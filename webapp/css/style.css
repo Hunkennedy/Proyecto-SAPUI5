@@ -1,0 +1,19 @@
+/* Enter your custom styles here */
+
+
+
+
+/* Aca se establecen los colores del elemento segun sus estados */
+tr[data-mydata="Pending"]{	
+background:   #ff9933!important;
+}
+        
+tr[data-mydata="SERVER DOWN"]{
+background: #fcb9b9!important;
+}
+tr[data-mydata="BANNED"]{
+    background: #adadad!important;
+    }
+tr[data-mydata="Approved"]{
+background:  #33cc33!important;
+}
