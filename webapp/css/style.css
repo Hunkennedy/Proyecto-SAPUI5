@@ -9,11 +9,11 @@ background:   #ff9933!important;
 }
         
 tr[data-mydata="SERVER DOWN"]{
-background: #fcb9b9!important;
+    background: #f7e3e3!important;
 }
 tr[data-mydata="BANNED"]{
-    background: #adadad!important;
-    }
+    background: #f7e3e3!important;
+}
 tr[data-mydata="Approved"]{
 background:  #33cc33!important;
 }

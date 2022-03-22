@@ -9,16 +9,8 @@
         title="Selecciona la region del nuevo servidor"
         items="{/EstadoservidorSet}"
         confirm="onCreateServer" >
-        
-        <StandardListItem title="{DescEstadoSer}">
-        
-        </StandardListItem>
+        <StandardListItem title="{DescEstadoSer}"/>
     </SelectDialog>
 
-    <!-- <TableSelectDialog
-        title=""
-        items="{/EstadoservidorSet}">
-        
-    </TableSelectDialog> -->
    
 </core:FragmentDefinition>

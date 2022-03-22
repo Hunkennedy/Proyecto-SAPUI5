@@ -4,15 +4,14 @@
     displayBlock="true"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:fb="sap.ui.comp.filterbar"
->
-    <Shell id="shell">
+    xmlns:fb="sap.ui.comp.filterbar">
+    <Shell id="shellUser">
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}" showNavButton="true" navButtonPress="onNavBack">
 
                     <headerContent>
-                        <Button icon="sap-icon://add-employee" text="Crear Usuario" tooltip="Crear Usuario" press="onCreateUser" />
+                        <Button icon="sap-icon://add-employee" text="Crear Usuario" tooltip="Crear Usuario" press="navToCreateUser" />
                     </headerContent>
                     <content>
                         <!-- INICIO CABECERA -->
@@ -48,6 +47,20 @@
                             showGoOnFB="false" 
                             useToolbar="false">
                             <fb:filterGroupItems>
+
+                                <fb:FilterGroupItem 
+                                    groupName="__$INTERNAL$" 
+                                    name="idNombreUsuarioFilter" 
+                                    label="{i18n>columna_Username}" 
+                                    labelTooltip="Tooltip Example"
+                                    mandatory="false" 
+                                    partOfCurrentVariant="true" 
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="idNombreUsuarioFilter" placeholder="Hola" liveChange="onFilterUsers"/>                                        
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
                                 <fb:FilterGroupItem 
                                     groupName="__$INTERNAL$" 
                                     name="idEstadoCuenta" 
@@ -67,11 +80,11 @@
                                         </Select>
                                     </fb:control>
                                 </fb:FilterGroupItem>
-
+                                
                                 <fb:FilterGroupItem 
                                     groupName="__$INTERNAL$" 
                                     name="idTipoCuenta" 
-                                    label="Tipo de Cuenta" 
+                                    label="{i18n>columna_TypeAccount}" 
                                     labelTooltip="Tooltip Example"
                                     mandatory="false" 
                                     partOfCurrentVariant="true" 
@@ -101,6 +114,7 @@
                             inset="false"
                             alternateRowColors="true"
                             noDataText="No hay usuarios en este servidor"
+                            width="auto"
                             items="{modeloLocalUsuarios>/}">
                             
                             <columns>

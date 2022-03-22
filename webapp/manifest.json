@@ -112,6 +112,13 @@
                     "target": [
                         "TargetUsersdetails"
                     ]
+                },
+                {
+                    "name": "CreateUser",
+                    "pattern": "RouteCreateUser",
+                    "target": [
+                        "TargetCreateUser"
+                    ]
                 }
             ],
             "targets": {
@@ -134,6 +141,13 @@
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewName": "Userdetail",
+                    "viewLevel": 2
+                },
+                "TargetCreateUser": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "CreateUser",
                     "viewLevel": 2
                 }
             }

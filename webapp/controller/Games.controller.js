@@ -67,8 +67,6 @@ sap.ui.define([
                     initialFocus : sap.m.MessageBox.Action.CANCEL,
                     onClose : function(sButton) {
                         if (sButton === MessageBox.Action.OK) {
-                            
-                            
                             switch (region) {
                                 case 'EU WEST'              : region = '0'
                                     break
@@ -82,12 +80,8 @@ sap.ui.define([
                                     break
                                 case 'NORTH AMERICA EAST'   : region = '5'
                                     break
-                                    
                             }
-
-                            
                             sendData.Region = region
-                            console.log(sendData);
                                 
                             oModel.create('/GameServerSet', sendData)
                         } 
