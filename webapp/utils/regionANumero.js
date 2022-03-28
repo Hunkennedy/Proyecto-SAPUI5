@@ -6,7 +6,7 @@ sap.ui.define([
         "use strict";
 
         return function (ServerRegion) {
-                let vNumberRegion = 0;
+                let vNumberRegion = ServerRegion;
                 switch (ServerRegion) {
                     case 'EU WEST': vNumberRegion = '0'; break;
                     case 'EU EAST': vNumberRegion = '1'; break;

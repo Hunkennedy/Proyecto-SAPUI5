@@ -16,20 +16,20 @@
         
             <FlexBox direction="Column" alignItems="Center" class="sapUiMediumMargin" >
                 <FlexBox direction="Row" alignItems="Start" class="sapUiTinyMarginBottom" width="auto">
-                    <Text text="{modeloLocalUsuario>/Username}: " class="sapUiTinyMarginEnd" width="200px"/>
+                    <Text text="Usuario ({modeloLocalUsuario>/Username}): " class="sapUiTinyMarginEnd" width="200px"/>
                     <Input id="idInputUsername"/>
-                    <Button text="Cambiar" press="_updateUserInfo"/>
                 </FlexBox>
                 <FlexBox direction="Row" alignItems="Start"  class="sapUiTinyMarginBottom" width="auto">
-                    <Text text="{modeloLocalUsuario>/Mail}: " class="sapUiTinyMarginEnd" width="200px"/>
+                    <Text text="Mail ({modeloLocalUsuario>/Mail}): " class="sapUiTinyMarginEnd" width="200px"/>
                     <Input id="idInputMail"/>
-                    <Button text="Cambiar" press="_updateUserInfo"/>
                 </FlexBox>
                 <FlexBox direction="Row" alignItems="Start"  class="sapUiTinyMarginBottom" width="auto">
                     <Text text="Password: " class="sapUiTinyMarginEnd" width="200px"/>
                     <Input id="idInputPassword"/>
-                    <Button text="Cambiar" press="_updateUserInfo"/>
 
+                </FlexBox>
+                <FlexBox direction="Row" alignItems="Start"  class="sapUiTinyMarginBottom" width="auto">
+                    <Button text="Cambiar" press="_updateUserInfo"/>
                 </FlexBox>
                 
             </FlexBox>

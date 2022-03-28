@@ -14,6 +14,9 @@ tr[data-mydata="SERVER DOWN"]{
 tr[data-mydata="BANNED"]{
     background: #f7e3e3!important;
 }
-tr[data-mydata="Approved"]{
-background:  #33cc33!important;
+tr[data-mydata="GOOD"]{
+    background: #b9ffb9!important;
+}
+tr[data-mydata="REPORTED"]{
+background:  #fff7b3!important;
 }

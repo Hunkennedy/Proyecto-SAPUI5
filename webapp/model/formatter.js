@@ -9,11 +9,11 @@ sap.ui.define([
             formatearEstadoServidor: function (ServerStatus) {
                 let vHighlight = '';
                 switch (ServerStatus) {
-                    case "SERVER UP":
+                    case "SERVER CLEAN":
                         vHighlight = "Success" 
                         
                         break;
-                    case "SERVER WITH PROBLEMS":
+                    case "SERVER WITH REPORTS":
                         vHighlight = "Information" 
                         break;
                     case "SERVER DOWN":

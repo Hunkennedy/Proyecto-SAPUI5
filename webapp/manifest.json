@@ -20,6 +20,21 @@
                     "odataVersion": "2.0"
                 }
             }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "academia2022.zluuc3games-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Videogames",
+                    "action": "Display",
+                    "title": "Videogame Users",
+                    "subTitle": "Gestion de usuarios de un videojuego",
+                    "icon": "sap-icon://laptop"
+                }
+            }
         }
     },
     "sap.ui": {
@@ -67,11 +82,10 @@
             "": {
                 "dataSource": "mainService",
                 "preload": true,
-                "settings": {}
-            },
-            "invoice": {
-                "type": "sap.ui.model.json.JSONModel",
-                "uri": "servers.json"
+                "settings": {
+                    "disableHeadRequestForToken": true,
+                    "useBatch": false
+                }
             }
         },
         "resources": {
@@ -119,6 +133,13 @@
                     "target": [
                         "TargetCreateUser"
                     ]
+                },
+                {
+                    "name": "Reportes",
+                    "pattern": "ReportSet/{ServerId},{Region},{Username}",
+                    "target": [
+                        "TargetReportes"
+                    ]
                 }
             ],
             "targets": {
@@ -142,12 +163,12 @@
                     "clearControlAggregation": false,
                     "viewName": "Userdetail",
                     "viewLevel": 2
-                },
-                "TargetCreateUser": {
+                },                
+                "TargetReportes": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewName": "CreateUser",
+                    "viewName": "Report",
                     "viewLevel": 2
                 }
             }

@@ -6,11 +6,12 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/m/MessageBox",
     "academia2022/zluuc3games/utils/regionANumero",
+    "sap/ui/model/json/JSONModel"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, formatter, Fragment, History, UIComponent, MessageBox, regionANumero) {
+    function (Controller, formatter, Fragment, History, UIComponent, MessageBox, regionANumero, JSONModel) {
         "use strict";
 
         let vServerId,
@@ -29,15 +30,7 @@ sap.ui.define([
                 vServerId = oEvent.getParameter("arguments").ServerId;
                 vRegion = oEvent.getParameter("arguments").Region;
 
-                let vNumberRegion = 0;
-                switch (vRegion) {
-                    case 'EU WEST': vNumberRegion = 0; break;
-                    case 'EU EAST': vNumberRegion = 1; break;
-                    case 'LATAM NORTH': vNumberRegion = 2; break;
-                    case 'LATAM SOUTH': vNumberRegion = 3; break;
-                    case 'NORTH AMERICA WEST': vNumberRegion = 4; break;
-                    case 'NORTH AMERICA EAST': vNumberRegion = 5; break;
-                }
+                let vNumberRegion = regionANumero(vRegion)
 
                 this._getServerDetails(vServerId, vNumberRegion)
                 this._getUsers(vServerId, vNumberRegion)
@@ -156,13 +149,6 @@ sap.ui.define([
                                         value: '{oCrearUsuarioModel>/usuario}'
                                     }),
                                     new sap.m.Label({
-                                        text: '{i18n>place_holder_mail}'
-                                    }),
-                                    new sap.m.Input({
-                                        width: '100%',
-                                        value: '{oCrearUsuarioModel>/mail}'
-                                    }),
-                                    new sap.m.Label({
                                         text: '{i18n>place_holder_password}'
                                     }),
                                     new sap.m.Input({
@@ -179,6 +165,18 @@ sap.ui.define([
                                         type: 'Password'
                                     }),
                                     new sap.m.Label({
+                                        text: '{i18n>place_holder_coins}'
+                                    }),
+                                    new sap.m.ComboBox({
+                                        width: '100%',
+                                        items: [
+                                            new sap.ui.core.Item({ text: 1000 }),
+                                            new sap.ui.core.Item({ text: 5000 }),
+                                            new sap.ui.core.Item({ text: 10000 }),
+                                        ],
+                                        value: '{oCrearUsuarioModel>/coins}' 
+                                    }),
+                                    new sap.m.Label({
                                         text: '{i18n>columna_TypeAccount}'
                                     }),
                                     new sap.m.ComboBox({
@@ -189,7 +187,8 @@ sap.ui.define([
                                             new sap.ui.core.Item({ text: 'Normal' })
                                         ],
                                         value: '{oCrearUsuarioModel>/tipocuenta}'
-                                    })
+                                    }),
+                                    
                                 ]
                             })
                         ],
@@ -218,16 +217,19 @@ sap.ui.define([
                 const oCrearModelo = this.oDialogCrear.getModel("oCrearUsuarioModel")
                 const dataCreacion = oCrearModelo.getData()
                 const oResourceBundle = this.getView().getModel('i18n').getResourceBundle()
-                const close = this.oDialogCrear.close()
+                const dialog = this.oDialogCrear
 
                 let ok = false
                 let oModel = this.getView().getModel()
                 let sPath = `/GameUserSet`
-                let successful = false
                 let sendData
+                // let CSRFToken = oModel.getSecurityToken()
+                // oModel.setHeaders({
+                //     "x-csrf-token": CSRFToken
+                // })
 
 
-                if (dataCreacion.usuario && dataCreacion.mail && dataCreacion.contrasena && dataCreacion.reingresocontrasena) {
+                if (dataCreacion.usuario && dataCreacion.contrasena && dataCreacion.reingresocontrasena) {
                     ok = true
                 }
                 else {
@@ -238,29 +240,53 @@ sap.ui.define([
                     ok = false
                     sap.m.MessageToast.show(oResourceBundle.getText("passwordNotMatch"))
                 }
-
                 sendData = {
                     ServerId : Number(vServerId),
                     Region   : regionANumero(vRegion),
                     Username : dataCreacion.usuario,
-                    Mail     : dataCreacion.mail,
+                    Coins     : dataCreacion.coins,
                     Password : dataCreacion.contrasena,
                     TypeAccount : regionANumero(dataCreacion.tipocuenta)
                 }
 
+
                 if (ok) {
                     oModel.create(sPath, sendData, {
                         success: function(data, response){
-                            successful = true
-                            this.getView().byId("idUsuariosTable").getModel().refresh(true)
-                            MessageBox.success("Data successfully created");
+                            
+
+                            dialog.close()
+                            this.getOwnerComponent()
+                                .getRouter()
+                                .navTo("users", {
+                                    ServerId : Number(vServerId),
+                                    Region   : regionANumero(vRegion)
+                                })
+
                         }.bind(this),
                         error: function(error){
-                            MessageBox.error("El usuario ya existe");
+                            MessageBox.error("El usuario ya existe")
                         }.bind(this)
                     })
+
                 }
 
+            },
+
+            onVisualizarReporte: function (oEvent) {
+
+                if (oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("AccountStatus") != "BANNED") {    
+                    this.getOwnerComponent()
+                        .getRouter()
+                        .navTo("Reportes", {
+                            ServerId: oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("ServerId"),
+                            Region: oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("Region"),
+                            Username: oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("Username")
+                        })
+                }
+                else {
+                    sap.m.MessageToast.show('No se puede revisar los usuarios baneados');
+                }
             },
 
 
@@ -270,9 +296,8 @@ sap.ui.define([
 
                     MessageBox.alert("No puedes editar a un usuario baneado!");
                 }
-                if (oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("AccountStatus") == 'GOOD') {
+                if (oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("AccountStatus") != 'BANNED') {
 
-                    console.log("CAN EDIT");
                     this.getOwnerComponent()
                         .getRouter()
                         .navTo("usersdetails", {
@@ -291,9 +316,18 @@ sap.ui.define([
                 let ServerId = oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("ServerId")
                 let Region = oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("Region")
                 let Username = oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("Username")
-
+                let oModel = this.getView().getModel()
+                let sPath = `/GameUserSet(ServerId=${ServerId},Region='${Region}',Username='${Username}')`
+                let back = this.getOwnerComponent()
+                .getRouter()
+                // let CSRFToken = oModel.getSecurityToken()
+                // oModel.setHeaders({
+                //     'x-csrf-token': CSRFToken
+                // })
+                
+                
                 if (oEvent.getSource().getBindingContext("modeloLocalUsuarios").getProperty("AccountStatus") == 'BANNED') {
-
+                    
                     MessageBox.alert("No puedes banear a un usuario baneado xd!", {
                         title: "Cuidado!"
                     });
@@ -304,21 +338,18 @@ sap.ui.define([
                         initialFocus: sap.m.MessageBox.Action.CANCEL,
                         onClose: function (sButton) {
                             if (sButton === MessageBox.Action.OK) {
-
                                 sendData.AccountStatus = "BANNED"
-
-                                let oModel = this.getView().getModel();
-                                let sPath = `/GameUserSet(ServerId=${ServerId},Region='${Region}',Username='${Username}')`;
-
                                 oModel.update(sPath, sendData)
-                            }
-                            if (sButton === MessageBox.Action.CANCEL) {
-                                // Do something
+                                
+                                back.navTo("RouteGames", {
+                                    ServerId : Number(vServerId),
+                                    Region   : regionANumero(vRegion)
+                                })
                             }
                         }
-                    });
-
+                    })
                 }
+                let refresh = oEvent.getSource().getBindingContext("modeloLocalUsuarios").getModel().refresh()
 
             }
 

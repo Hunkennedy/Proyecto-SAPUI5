@@ -1,61 +1,133 @@
-<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
-    <edmx:DataServices m:DataServiceVersion="2.0">
-        <Schema Namespace="ZOS_ACADEMIA_HK_GAMES_SRV" xml:lang="es" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-            <EntityType Name="GameServer" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="ServerId"/>
-                    <PropertyRef Name="Region"/>
-                </Key>
-                <Property Name="ServerId" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Server ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Region" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ServerRelease" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Server Salida" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="QuantityUsers" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Cantidad Users" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ServerStatus" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Estado Server" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <NavigationProperty Name="GameUserSet" Relationship="ZOS_ACADEMIA_HK_GAMES_SRV.ServidorToUsuarios" FromRole="FromRole_ServidorToUsuarios" ToRole="ToRole_ServidorToUsuarios"/>
-            </EntityType>
-            <EntityType Name="GameUser" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="ServerId"/>
-                    <PropertyRef Name="Region"/>
-                    <PropertyRef Name="Username"/>
-                </Key>
-                <Property Name="ServerId" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Server ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Region" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Username" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Usuario" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Mail" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Mail" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Password" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Contraseña" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="AccountCreated" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Cuenta Creada" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="AccountStatus" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Estado Cuenta" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="TypeAccount" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Tipo Cuenta" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="LevelAccount" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Nivel" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="TimePlayed" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Tiempo Jugado" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <NavigationProperty Name="GameServer" Relationship="ZOS_ACADEMIA_HK_GAMES_SRV.ServidorToUsuarios" FromRole="ToRole_ServidorToUsuarios" ToRole="FromRole_ServidorToUsuarios"/>
-            </EntityType>
-            <Association Name="ServidorToUsuarios" sap:content-version="1">
-                <End Type="ZOS_ACADEMIA_HK_GAMES_SRV.GameServer" Multiplicity="1" Role="FromRole_ServidorToUsuarios"/>
-                <End Type="ZOS_ACADEMIA_HK_GAMES_SRV.GameUser" Multiplicity="*" Role="ToRole_ServidorToUsuarios"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromRole_ServidorToUsuarios">
-                        <PropertyRef Name="ServerId"/>
-                        <PropertyRef Name="Region"/>
-                    </Principal>
-                    <Dependent Role="ToRole_ServidorToUsuarios">
-                        <PropertyRef Name="ServerId"/>
-                        <PropertyRef Name="Region"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <EntityContainer Name="ZOS_ACADEMIA_HK_GAMES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
-                <EntitySet Name="GameServerSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.GameServer" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
-                <EntitySet Name="GameUserSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.GameUser" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
-                <AssociationSet Name="ServidorToUsuariosSet" Association="ZOS_ACADEMIA_HK_GAMES_SRV.ServidorToUsuarios" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="GameServerSet" Role="FromRole_ServidorToUsuarios"/>
-                    <End EntitySet="GameUserSet" Role="ToRole_ServidorToUsuarios"/>
-                </AssociationSet>
-            </EntityContainer>
-            <atom:link rel="self" href="http://stks4hpil.eastus2.cloudapp.azure.com:8002/sap/opu/odata/sap/ZOS_ACADEMIA_HK_GAMES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-            <atom:link rel="latest-version" href="http://stks4hpil.eastus2.cloudapp.azure.com:8002/sap/opu/odata/sap/ZOS_ACADEMIA_HK_GAMES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-        </Schema>
-    </edmx:DataServices>
+<?xml version="1.0" encoding="UTF-8"?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+   <edmx:DataServices m:DataServiceVersion="2.0">
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZOS_ACADEMIA_HK_GAMES_SRV" xml:lang="es" sap:schema-version="1">
+         <EntityType Name="Estadoservidor" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="CodEstadoSer" />
+            </Key>
+            <Property Name="CodEstadoSer" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="DescEstadoSer" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+         </EntityType>
+         <EntityType Name="GameServer" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="ServerId" />
+               <PropertyRef Name="Region" />
+            </Key>
+            <Property Name="ServerId" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Server ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Region" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="ServerRelease" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Server Salida" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="QuantityUsers" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Cantidad Users" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="ServerStatus" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Estado Server" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="TotalReports" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Reportes Totales" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            <NavigationProperty Name="GameUserSet" Relationship="ZOS_ACADEMIA_HK_GAMES_SRV.ServidorToUsuarios" FromRole="FromRole_ServidorToUsuarios" ToRole="ToRole_ServidorToUsuarios" />
+         </EntityType>
+         <EntityType Name="GameUser" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="ServerId" />
+               <PropertyRef Name="Region" />
+               <PropertyRef Name="Username" />
+            </Key>
+            <Property Name="ServerId" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Server ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Region" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Username" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Usuario" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Mail" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Mail" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Password" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Contraseña" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="AccountCreated" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Cuenta Creada" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="AccountStatus" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Estado Cuenta" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="TypeAccount" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Tipo Cuenta" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="LevelAccount" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Nivel" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="TimePlayed" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Tiempo Jugado" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Coins" Type="Edm.Int64" Nullable="false" sap:unicode="false" sap:label="Moneda" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <NavigationProperty Name="GameServer" Relationship="ZOS_ACADEMIA_HK_GAMES_SRV.ServidorToUsuarios" FromRole="ToRole_ServidorToUsuarios" ToRole="FromRole_ServidorToUsuarios" />
+            <NavigationProperty Name="ReportSet" Relationship="ZOS_ACADEMIA_HK_GAMES_SRV.UsuarioToReporte" FromRole="FromRole_UsuarioToReporte" ToRole="ToRole_UsuarioToReporte" />
+         </EntityType>
+         <EntityType Name="Estado" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="CodEstado" />
+            </Key>
+            <Property Name="CodEstado" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="DescEstado" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+         </EntityType>
+         <EntityType Name="Tipo" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="CodTipo" />
+            </Key>
+            <Property Name="CodTipo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="DescTipo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+         </EntityType>
+         <EntityType Name="Region" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="CodRegion" />
+            </Key>
+            <Property Name="CodRegion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="DescRegion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+         </EntityType>
+         <EntityType Name="Report" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="ServerId" />
+               <PropertyRef Name="Region" />
+               <PropertyRef Name="Username" />
+            </Key>
+            <Property Name="ServerId" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Server ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Server" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Username" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Usuario" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Reported" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Usuario" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="200" sap:unicode="false" sap:label="Descripcion" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="ReportCreated" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Fecha" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <Property Name="ReportStatus" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Fecha" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            <NavigationProperty Name="GameUser" Relationship="ZOS_ACADEMIA_HK_GAMES_SRV.UsuarioToReporte" FromRole="ToRole_UsuarioToReporte" ToRole="FromRole_UsuarioToReporte" />
+         </EntityType>
+         <Association Name="UsuarioToReporte" sap:content-version="1">
+            <End Type="ZOS_ACADEMIA_HK_GAMES_SRV.GameUser" Multiplicity="1" Role="FromRole_UsuarioToReporte" />
+            <End Type="ZOS_ACADEMIA_HK_GAMES_SRV.Report" Multiplicity="*" Role="ToRole_UsuarioToReporte" />
+            <ReferentialConstraint>
+               <Principal Role="FromRole_UsuarioToReporte">
+                  <PropertyRef Name="Username" />
+                  <PropertyRef Name="Region" />
+                  <PropertyRef Name="ServerId" />
+               </Principal>
+               <Dependent Role="ToRole_UsuarioToReporte">
+                  <PropertyRef Name="Username" />
+                  <PropertyRef Name="Region" />
+                  <PropertyRef Name="ServerId" />
+               </Dependent>
+            </ReferentialConstraint>
+         </Association>
+         <Association Name="ServidorToUsuarios" sap:content-version="1">
+            <End Type="ZOS_ACADEMIA_HK_GAMES_SRV.GameServer" Multiplicity="1" Role="FromRole_ServidorToUsuarios" />
+            <End Type="ZOS_ACADEMIA_HK_GAMES_SRV.GameUser" Multiplicity="*" Role="ToRole_ServidorToUsuarios" />
+            <ReferentialConstraint>
+               <Principal Role="FromRole_ServidorToUsuarios">
+                  <PropertyRef Name="ServerId" />
+                  <PropertyRef Name="Region" />
+               </Principal>
+               <Dependent Role="ToRole_ServidorToUsuarios">
+                  <PropertyRef Name="ServerId" />
+                  <PropertyRef Name="Region" />
+               </Dependent>
+            </ReferentialConstraint>
+         </Association>
+         <EntityContainer Name="ZOS_ACADEMIA_HK_GAMES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+            <EntitySet Name="EstadoservidorSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.Estadoservidor" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+            <EntitySet Name="GameServerSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.GameServer" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+            <EntitySet Name="GetOneUser" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.GameUser" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+            <EntitySet Name="GameUserSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.GameUser" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+            <EntitySet Name="EstadoSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.Estado" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+            <EntitySet Name="TipoSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.Tipo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+            <EntitySet Name="RegionSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.Region" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+            <EntitySet Name="ReportSet" EntityType="ZOS_ACADEMIA_HK_GAMES_SRV.Report" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+            <AssociationSet Name="UsuarioToReporteSet" Association="ZOS_ACADEMIA_HK_GAMES_SRV.UsuarioToReporte" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+               <End EntitySet="GameUserSet" Role="FromRole_UsuarioToReporte" />
+               <End EntitySet="ReportSet" Role="ToRole_UsuarioToReporte" />
+            </AssociationSet>
+            <AssociationSet Name="ServidorToUsuariosSet" Association="ZOS_ACADEMIA_HK_GAMES_SRV.ServidorToUsuarios" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+               <End EntitySet="GameServerSet" Role="FromRole_ServidorToUsuarios" />
+               <End EntitySet="GameUserSet" Role="ToRole_ServidorToUsuarios" />
+            </AssociationSet>
+         </EntityContainer>
+         <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://stks4hpil.eastus2.cloudapp.azure.com:8002/sap/opu/odata/sap/ZOS_ACADEMIA_HK_GAMES_SRV/$metadata" />
+         <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://stks4hpil.eastus2.cloudapp.azure.com:8002/sap/opu/odata/sap/ZOS_ACADEMIA_HK_GAMES_SRV/$metadata" />
+      </Schema>
+   </edmx:DataServices>
 </edmx:Edmx>

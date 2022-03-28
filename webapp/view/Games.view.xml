@@ -9,13 +9,7 @@
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}">
-                    <headerContent>
-                        <Button 
-                            icon="sap-icon://it-system" 
-                            text="Crear Servidor" 
-                            tooltip="Crear Servidor"
-                            press="onFragmentCreateServer" />
-                    </headerContent>
+                    
                     <content>
                         <Table 
                             id="idServersTable"
@@ -48,6 +42,13 @@
                                 </Column>
                                 <Column 
                                     minScreenWidth="Tablet"
+                                    width="14em"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="{i18n>columna_cantidad-reportes}" />
+                                </Column>
+                                <Column 
+                                    minScreenWidth="Tablet"
                                     demandPopin="true"
                                     hAlign="Center">
                                     <Text text="{i18n>columna_estado-servidor}" />
@@ -58,8 +59,7 @@
                                 <ColumnListItem 
                                     vAlign="Middle"
                                     type="Navigation"
-                                    press="onVisualizarUsuarios"
-                                    highlight="{= ${ServerStatus} === 'SERVER UP' ? 'Success' : 'Error' }" >
+                                    press="onVisualizarUsuarios">
                                     <customData>
                                         <core:CustomData key="mydata" value="{ServerStatus}" writeToDom="true"></core:CustomData>
                                     </customData>
@@ -68,6 +68,7 @@
                                         <ObjectIdentifier title="{Region}"/>
                                         <Text text="{ServerRelease}" />
                                         <Text text="{QuantityUsers}" />
+                                        <Text text="{TotalReports}" />
                                         <Text text="{ServerStatus}" />
                                     </cells>
                                 </ColumnListItem>

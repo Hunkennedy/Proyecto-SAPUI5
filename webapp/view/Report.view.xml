@@ -1,0 +1,47 @@
+<mvc:View
+	controllerName="academia2022.zluuc3games.controller.Report"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+    
+    <Page showNavButton="true" navButtonPress="onNavBack">
+        <headerContent>
+            <Button icon="sap-icon://add-employee" text="Crear Reporte"  press="navToCreateReport" />
+        </headerContent>
+        <l:VerticalLayout
+            class="sapUiContentPadding" 
+            width="100%">
+            <l:content>
+                <List
+                    headerText="{i18n>report_title}"
+                    id="idReportesLista"
+                    noDataText="{i18n>report_no_data}"
+                    items="{modeloLocalReportes>/}" >
+                    <FeedListItem
+                        sender="{modeloLocalReportes>Reported}"
+                        icon="{AuthorPicUrl}"
+                        senderPress="onPress"
+                        iconPress="onPress"
+                        iconDensityAware="false"
+                        info="{modeloLocalReportes>Username}"
+                        timestamp="{modeloLocalReportes>ReportCreated}"
+                        text="{modeloLocalReportes>Description}"
+                        convertLinksToAnchorTags="All"
+                        actions="{path: 'Actions', templateShareable: false}">
+                        <FeedListItemAction text="{Text}" icon="{Icon}" key="{Key}" press="onActionPressed" />
+                    </FeedListItem>
+                </List>
+            </l:content>
+        </l:VerticalLayout>
+
+        <footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="{i18n>report_cancel}" type="Accept" press="onDesbanear"/>
+				<Button text="{i18n>report_accept}" type="Reject" press="onBanear"/>
+			</OverflowToolbar>
+		</footer>
+
+
+    </Page>
+</mvc:View>

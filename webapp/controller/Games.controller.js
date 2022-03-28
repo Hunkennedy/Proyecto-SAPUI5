@@ -44,51 +44,8 @@ sap.ui.define([
 
             },
 
-            onFragmentCreateServer: function (oEvent) {
-                console.log("Hello World!")
-                if (!this._valueHelpCreateServer) {
-                    this._valueHelpCreateServer = sap.ui.xmlfragment("frgCreateServer",
-                        "academia2022.zluuc3games.view.CreateServer",
-                        this)
-                    this.getView().addDependent(this._valueHelpCreateServer)
-                }
-                this._valueHelpCreateServer.open()
+            
 
-                
-            },
-
-            onCreateServer: function(oEvent) {
-                let sendData = {}
-                let region = oEvent.getParameters().selectedItem.getBindingContext().getProperty("DescEstadoSer")
-                let oModel = this.getView().getModel();
-
-                MessageBox.confirm(`Seguro que quieres crear el servidor en ${region}?`, {
-                    title: "Atencion!",
-                    initialFocus : sap.m.MessageBox.Action.CANCEL,
-                    onClose : function(sButton) {
-                        if (sButton === MessageBox.Action.OK) {
-                            switch (region) {
-                                case 'EU WEST'              : region = '0'
-                                    break
-                                case 'EU EAST'              : region = '1' 
-                                    break
-                                case 'LATAM NORTH'          : region = '2'
-                                    break
-                                case 'LATAM SOUTH'          : region = '3'
-                                    break
-                                case 'NORTH AMERICA WEST'   : region = '4'
-                                    break
-                                case 'NORTH AMERICA EAST'   : region = '5'
-                                    break
-                            }
-                            sendData.Region = region
-                                
-                            oModel.create('/GameServerSet', sendData)
-                        } 
-                    }
-                });
-                
-            },
 
 
         });

@@ -18,19 +18,19 @@
 
                         <ObjectHeader
                             responsive="true"
-                            intro="Detalle del servidor"
                             title="{modeloLocalServidor>/Region}"
                             backgroundDesign="Translucent">
                             <statuses>
                                 <ObjectStatus
-                                    title="Estado del Servidor"
-                                    state="{= ${modeloLocalServidor>/ServerStatus} === 'SERVER UP' ? 'Success' : 'Error' }"
+                                    title="{i18n>columna_estado-servidor}"
+                                    state="{= ${modeloLocalServidor>/ServerStatus} === 'SERVER CLEAN' ? 'Success' : 'Warning' }"
                                     text="{modeloLocalServidor>/ServerStatus}" />
                             </statuses>
                             <attributes>
                                 
-                                <ObjectAttribute title="Fecha de Apertura" text=" {modeloLocalServidor>/ServerRelease}"/>
-                                <ObjectAttribute title="Usuarios Registrados" text="{modeloLocalServidor>/QuantityUsers}"></ObjectAttribute>    
+                                <ObjectAttribute title="{i18n>columna_release_server}" text=" {modeloLocalServidor>/ServerRelease}"/>
+                                <ObjectAttribute title="{i18n>columna_cantidad-reportes}" text=" {modeloLocalServidor>/TotalReports}"/>
+                                <ObjectAttribute title="{i18n>columna_cantidad-usuarios}" text="{modeloLocalServidor>/QuantityUsers}"/>
                             </attributes>
 
                             
@@ -57,7 +57,7 @@
                                     partOfCurrentVariant="true" 
                                     visibleInFilterBar="true">
                                     <fb:control>
-                                        <Input id="idNombreUsuarioFilter" placeholder="Hola" liveChange="onFilterUsers"/>                                        
+                                        <Input id="idNombreUsuarioFilter" liveChange="onFilterUsers"/>                                        
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
@@ -127,7 +127,7 @@
                                 <Column 
                                     minScreenWidth="Small"
                                     demandPopin="true"
-                                    width="10em"
+                                    width="14em"
                                     hAlign="Center">
                                     <Text text="{i18n>columna_Mail}" />
                                 </Column>
@@ -165,18 +165,23 @@
                                     hAlign="Center">
                                     <Text text="{i18n>columna_TimePlayed}" />
                                 </Column>
-                                <Column width="32px" hAlign="Left" minScreenWidth="Small"></Column>
-                                <Column width="5rem" hAlign="Center">
-
+                                <Column 
+                                    width="5rem"
+                                    minScreenWidth="Small"
+                                    demandPopin="true"
+                                    hAlign="Center">
+                                    <Text text="Coins" />
                                 </Column>
+                                <Column width="32px" hAlign="Left" minScreenWidth="Small"></Column>
+                                
                                 
                             </columns>
                             <items>
                                 <ColumnListItem 
                                     id="_IDGenColumnListItem1" 
+                                    type="Navigation"
                                     vAlign="Middle" 
-                                    press="onVisualizarUsuarios"
-                                    highlight="{= ${modeloLocalUsuarios>AccountStatus} === 'GOOD' ? 'Success' : 'Error' }">
+                                    press="onVisualizarReporte">
                                     <customData>
                                         <core:CustomData key="mydata" value="{modeloLocalUsuarios>AccountStatus}" writeToDom="true"></core:CustomData>
                                     </customData>
@@ -189,11 +194,11 @@
                                         <Text text="{modeloLocalUsuarios>TypeAccount}" />
                                         <Text text="{modeloLocalUsuarios>LevelAccount}" />
                                         <Text text="{modeloLocalUsuarios>TimePlayed}" />
+                                        <Text text="{modeloLocalUsuarios>Coins}" />
                                         <Button 
                                             icon="sap-icon://edit" 
                                             type="Transparent" 
                                             press="onDetailsUser"/>
-                                        <Button type="Reject" text="Bannear" press="onBannearUser" />
                                     </cells>
                                 </ColumnListItem>
                             </items>

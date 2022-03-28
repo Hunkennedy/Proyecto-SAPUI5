@@ -64,17 +64,19 @@ sap.ui.define([
                 
             _updateUserInfo: function(oEvent) {
 
-                console.log(userData);
                 
-
                 let sendData = {
                 }
                 sendData.Username = this.getView().byId("idInputUsername").getValue() || ""
                 sendData.Mail = this.getView().byId("idInputMail").getValue() || ""
                 sendData.Password = this.getView().byId("idInputPassword").getValue() || ""
-
+                
                 let oModel = this.getView().getModel();
                 let sPath = `/GameUserSet(ServerId=${userData.ServerId},Region='${userData.Region}',Username='${userData.Username}')`;
+                // let CSRFToken = oModel.getSecurityToken()
+                // oModel.setHeaders({
+                //     'x-csrf-token': CSRFToken
+                // })
 
                 oModel.update(sPath, sendData)
                 oModel.refresh(true);
